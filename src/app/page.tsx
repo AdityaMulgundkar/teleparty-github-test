@@ -24,11 +24,13 @@ const App: React.FC = () => {
             `https://api.github.com/search/users?q=${encodeURIComponent(
               fullName
             )}`,
-            token?{
-              headers: {
-                Authorization: `token ${token}`,
-              },
-            }:{}
+            token
+              ? {
+                  headers: {
+                    Authorization: `token ${token}`,
+                  },
+                }
+              : {}
           );
 
           if (response.status === 403) {
@@ -40,7 +42,7 @@ const App: React.FC = () => {
 
           const usersWithDetails = await Promise.all(
             data.items.map(async (user) => {
-              const { name, followers } = await fetchUser(user.login);
+              const { name, followers } = await fetchUser(user.login, token!);
               return {
                 ...user,
                 name,
@@ -76,6 +78,8 @@ const App: React.FC = () => {
     setFullName(e.target.value);
   };
 
+  var tokenPrint = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+
   return (
     <div className="mx-auto max-w-2xl py-4 sm:py-8 lg:py-16 ">
       <div className="h-56 grid grid-cols-3 gap-4 content-center">
@@ -83,6 +87,8 @@ const App: React.FC = () => {
         <img src="teleparty.jpg" alt="TeleParty" className="mb-8" />
         <div></div>
       </div>
+      <p>{tokenPrint}</p>
+
       <input
         autoComplete="given-name"
         name="search"
