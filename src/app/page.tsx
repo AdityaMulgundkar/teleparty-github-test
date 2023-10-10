@@ -78,8 +78,6 @@ const App: React.FC = () => {
     setFullName(e.target.value);
   };
 
-  var tokenPrint = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
   return (
     <div className="mx-auto max-w-2xl py-4 sm:py-8 lg:py-16 ">
       <div className="h-56 grid grid-cols-3 gap-4 content-center">
@@ -87,8 +85,6 @@ const App: React.FC = () => {
         <img src="teleparty.jpg" alt="TeleParty" className="mb-8" />
         <div></div>
       </div>
-      <p>{tokenPrint}</p>
-
       <input
         autoComplete="given-name"
         name="search"
